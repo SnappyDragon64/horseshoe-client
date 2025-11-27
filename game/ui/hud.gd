@@ -1,14 +1,7 @@
 extends CanvasLayer
 
-var max_characters := 120
 
 @onready var line_edit: LineEdit = $PanelContainer/MarginContainer/HBoxContainer/LineEdit
-
-
-func _on_line_edit_text_changed(_new_text: String) -> void:
-	if line_edit.text.length() > max_characters:
-		line_edit.text = line_edit.text.left(max_characters)
-		line_edit.caret_column = line_edit.text.length()
 
 
 func _on_line_edit_text_submitted(_new_text: String) -> void:
