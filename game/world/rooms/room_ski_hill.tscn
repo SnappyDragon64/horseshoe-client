@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyg5pujmr8v4c"]
+
+[ext_resource type="Texture2D" uid="uid://drfkmfw80gsiy" path="res://assets/rooms/ski_hill.png" id="1_04li6"]
+[ext_resource type="Script" uid="uid://kpodsrx7bqxk" path="res://game/world/entities/room_switcher.gd" id="2_nr75m"]
+[ext_resource type="Resource" uid="uid://bh0madl6skv1w" path="res://data/rooms/ski_village.tres" id="3_v4xn1"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_i8jub"]
+vertices = PackedVector2Array(386.64844, -31.226563, 417.29688, -13.9296875, 372.5625, 28.523438, 339.3125, 16.71875, -359.4375, 37.671875, -420.8203, -16.882813, -388.46875, -44.820313, -277.53906, -39.640625, -185.57813, 70.28125, 42.6875, -165.96875, 162.92969, -163.17969, 174.46094, -111.328125, 173.5625, 64.89844, 100.609375, 90.86719, 14.890625, 84.96875, -65.28906, -147.8125, 333.8125, -103.140625, 368.8203, -87.671875, 272.3125, -78.34375, 330.6875, 32.5, 257.85156, 69.85156, -130.10156, -162.53906, -103.921875, 95.85156, -257.70313, -109.609375)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 8), PackedInt32Array(9, 10, 11, 12, 13, 14, 15), PackedInt32Array(16, 17, 0, 3, 18), PackedInt32Array(18, 3, 19, 20, 12, 11), PackedInt32Array(21, 15, 14, 22, 8, 7, 23)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-392, -55, -436, -17, -364, 47, -188, 80, -105, 106, 15, 95, 102, 101, 175, 75, 260, 80, 338, 40, 344, 29, 375, 40, 434, -16, 395, -38, 377, -95, 334, -114, 272, -89, 183, -119, 171, -173, 42, -176, -65, -158, -131, -173, -266, -117, -285, -50)])
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x2s7d"]
+radius = 35.0
+
+[node name="RoomSkiHill" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_04li6")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_i8jub")
+
+[node name="RoomSwitcher" type="Area2D" parent="."]
+script = ExtResource("2_nr75m")
+room = ExtResource("3_v4xn1")
+metadata/_custom_type_script = "uid://kpodsrx7bqxk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomSwitcher"]
+position = Vector2(399, 15)
+shape = SubResource("CircleShape2D_x2s7d")

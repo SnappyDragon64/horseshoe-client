@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Room" load_steps=2 format=3 uid="uid://wtfv1os5r7l"]
+
+[ext_resource type="Script" uid="uid://dmmsqkuccav5a" path="res://game/resources/room.gd" id="1_voplw"]
+
+[resource]
+script = ExtResource("1_voplw")
+id = "ski_hill"
+name = "Ski Hill"
+scene_path = "uid://dyg5pujmr8v4c"
+metadata/_custom_type_script = "uid://dmmsqkuccav5a"

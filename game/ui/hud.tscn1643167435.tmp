@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://vmt6poocil88"]
+
+[ext_resource type="Script" uid="uid://opv27hpajapq" path="res://game/ui/hud.gd" id="1_ngxib"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eur44"]
+bg_color = Color(0.2509804, 0.2509804, 0.2509804, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3lbap"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_ngxib")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -349.5
+offset_top = -39.0
+offset_right = 349.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_eur44")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3lbap")
+drag_and_drop_selection_enabled = false
+caret_blink = true
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Send"
+
+[connection signal="text_changed" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_submitted" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]

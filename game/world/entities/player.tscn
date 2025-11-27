@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://dx5stbl744g5d"]
+
+[ext_resource type="Script" uid="uid://tjj8x0pcw5uj" path="res://game/world/entities/player.gd" id="1_3a8sv"]
+[ext_resource type="Texture2D" uid="uid://ds8arii3ao1fr" path="res://assets/guy_funlin.png" id="1_46til"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xkeht"]
+radius = 16.0
+height = 72.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3a8sv"]
+bg_color = Color(0.78431374, 0.78431374, 0.8627451, 0.8627451)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_3a8sv")
+
+[node name="SpriteHolder" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="SpriteHolder"]
+position = Vector2(0, -40)
+texture = ExtResource("1_46til")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -36)
+shape = SubResource("CapsuleShape2D_xkeht")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+z_index = 10
+custom_minimum_size = Vector2(128, 0)
+offset_left = -64.0
+offset_right = 64.0
+offset_bottom = 17.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+
+[node name="ChatBubbleHolder" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -92.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ChatBubble" type="Label" parent="ChatBubbleHolder"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -0.5
+offset_top = -23.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_3a8sv")
+horizontal_alignment = 1
+
+[node name="ChatBubbleTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="timeout" from="ChatBubbleTimer" to="." method="_on_chat_bubble_timer_timeout"]
