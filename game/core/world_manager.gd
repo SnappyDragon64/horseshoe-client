@@ -61,6 +61,6 @@ func move_player(id: String, target: Vector2) -> void:
 		players[id].move_to(target)
 
 
-func chat_player(id: String, msg: String) -> void:
+func player_message(id: String, msg: String) -> void:
 	if players.has(id):
 		players[id].display_message(msg)
