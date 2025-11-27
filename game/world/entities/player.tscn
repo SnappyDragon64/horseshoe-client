@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dx5stbl744g5d"]
+[gd_scene load_steps=7 format=3 uid="uid://dx5stbl744g5d"]
 
 [ext_resource type="Script" uid="uid://tjj8x0pcw5uj" path="res://game/world/entities/player.gd" id="1_3a8sv"]
 [ext_resource type="Texture2D" uid="uid://ds8arii3ao1fr" path="res://assets/guy_funlin.png" id="1_46til"]
+[ext_resource type="Texture2D" uid="uid://dbm1dhkg67emr" path="res://assets/shadow.png" id="3_t87fx"]
+[ext_resource type="Texture2D" uid="uid://cc1qbp3bydmc4" path="res://assets/ring.png" id="4_yimyf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xkeht"]
 radius = 16.0
@@ -40,6 +42,8 @@ offset_left = -64.0
 offset_right = 64.0
 offset_bottom = 17.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
 
@@ -75,5 +79,17 @@ horizontal_alignment = 1
 [node name="ChatBubbleTimer" type="Timer" parent="."]
 wait_time = 4.0
 one_shot = true
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.3137255)
+z_index = -1
+scale = Vector2(1.1, 0.275)
+texture = ExtResource("3_t87fx")
+
+[node name="Ring" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+scale = Vector2(1.2, 0.3)
+texture = ExtResource("4_yimyf")
 
 [connection signal="timeout" from="ChatBubbleTimer" to="." method="_on_chat_bubble_timer_timeout"]

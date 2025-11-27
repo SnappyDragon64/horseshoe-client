@@ -2,7 +2,14 @@ class_name Player
 extends Area2D
 
 
-var is_local: bool = false
+var is_local: bool = false:
+	get:
+		return is_local
+	set(value):
+		is_local = value
+		
+		if ring:
+			ring.set_visible(is_local)
 
 var player_name: String:
 	get:
@@ -17,6 +24,7 @@ var speed: float = 200.0
 
 @onready var sprite_holder: Node2D = $SpriteHolder
 @onready var sprite: Sprite2D = $SpriteHolder/Sprite2D
+@onready var ring: Sprite2D = $Ring
 
 @onready var label: Label = $Label
 
@@ -32,6 +40,7 @@ var chat_bubble_tween: Tween
 
 func _ready() -> void:
 	label.set_text(player_name)
+	ring.set_visible(is_local)
 	navigation_agent.navigation_finished.connect(_on_navigation_agent_navigation_finished)
 
 
