@@ -1,0 +1,42 @@
+name: Deploy Web Client to Itch
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  GODOT_VERSION: 4.5.0 
+  
+  ITCH_USER: snappydragon64
+  ITCH_GAME: horseshoe-client
+
+jobs:
+  export_and_deploy:
+    runs-on: ubuntu-latest
+    name: Export and Push
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false 
+          include-templates: true
+
+      - name: Create Build Directory
+        run: mkdir -p .build/web
+
+      - name: Export HTML5
+        run: godot --headless --verbose --export-release "Web" .build/web/index.html
+
+      - name: Deploy to itch.io
+        uses: Ayowel/butler-to-itch@v1
+        with:
+          butler_key: ${{ secrets.BUTLER_API_KEY }}
+          itch_user: ${{ env.ITCH_USER }}
+          itch_game: ${{ env.ITCH_GAME }}
+          version: ${{ github.ref_name }}
+          files: web .build/web
