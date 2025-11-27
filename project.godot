@@ -14,6 +14,7 @@ config/name="Horseshoe Client"
 run/main_scene="uid://dfhrsr231y3it"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+config/server_url=&"wss://74.225.136.76.sslip.io/ws"
 
 [autoload]
 

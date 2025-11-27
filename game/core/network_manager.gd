@@ -6,8 +6,7 @@ signal disconnected
 signal packet_received(data: Dictionary)
 
 var socket: WebSocketPeer = WebSocketPeer.new()
-var websocket_url: StringName = &"ws://localhost:8080/ws"
-
+var websocket_url: String = "ws://localhost:8080/ws" if false else ProjectSettings.get_setting("application/config/server_url")
 var _connected := false
 
 
