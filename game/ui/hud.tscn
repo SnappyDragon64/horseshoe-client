@@ -46,8 +46,9 @@ caret_blink = true
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 text = "Send"
 
+[connection signal="gui_input" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_gui_input"]
 [connection signal="text_changed" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="text_submitted" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]

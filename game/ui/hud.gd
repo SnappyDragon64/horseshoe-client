@@ -15,8 +15,15 @@ func _on_line_edit_text_submitted(_new_text: String) -> void:
 	_submit_message()
 
 
+func _on_line_edit_gui_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
+		_submit_message()
+		get_viewport().set_input_as_handled()
+
+
 func _on_button_pressed() -> void:
 	_submit_message()
+	line_edit.grab_focus()
 
 
 func _submit_message() -> void:
