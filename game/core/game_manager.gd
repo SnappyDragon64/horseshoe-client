@@ -24,11 +24,7 @@ func _on_connected() -> void:
 	var camera: Camera2D = Camera2D.new()
 	add_child(camera)
 	
-	var join_packet: Dictionary = {
-		"type": "join_room",
-		"room": default_room.id,
-		"pos": {"x": 0, "y": 0}
-	}
+	var join_packet: Dictionary = PacketBuilder.create_join_packet(default_room, Vector2.ZERO)
 	NetworkManager.send_packet(join_packet)
 
 

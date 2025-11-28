@@ -14,9 +14,5 @@ func _on_area_entered(area: Area2D) -> void:
 		var player: Player = area
 		
 		if player.is_local:
-			var join_packet: Dictionary = {
-				"type": "join_room",
-				"room": room.id,
-				"pos": {"x": 0, "y": 0}
-			}
+			var join_packet: Dictionary = PacketBuilder.create_join_packet(room, Vector2.ZERO)
 			NetworkManager.send_packet(join_packet)

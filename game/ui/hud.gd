@@ -4,10 +4,6 @@ extends CanvasLayer
 @onready var line_edit: LineEdit = $PanelContainer/MarginContainer/HBoxContainer/LineEdit
 
 
-func _on_line_edit_text_submitted(_new_text: String) -> void:
-	_submit_message()
-
-
 func _on_line_edit_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
 		_submit_message()
@@ -24,8 +20,6 @@ func _submit_message() -> void:
 	
 	if len(text) > 0 and WorldManager.local_player:
 		WorldManager.local_player.display_message(text)
-		NetworkManager.send_packet({
-			"type": "chat",
-			"message": text
-		})
+		var packet: Dictionary = PacketBuilder.create_chat_packet(text)
+		NetworkManager.send_packet(packet)
 		line_edit.clear()

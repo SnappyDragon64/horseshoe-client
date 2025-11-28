@@ -41,6 +41,7 @@ custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3lbap")
+max_length = 120
 drag_and_drop_selection_enabled = false
 caret_blink = true
 

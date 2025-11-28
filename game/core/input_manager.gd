@@ -15,8 +15,5 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			WorldManager.local_player.move_to(target_position)
 
-			var packet := {
-				"type": "move",
-				"target": { "x": target_position.x, "y": target_position.y }
-			}
+			var packet := PacketBuilder.create_move_packet(target_position)
 			NetworkManager.send_packet(packet)
