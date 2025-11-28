@@ -5,9 +5,9 @@ extends RefCounted
 var _registry: Dictionary[String, Variant] = {}
 
 
-func register(id: String, variant: Variant) -> Variant:
+func _register(id: String, variant: Variant) -> Variant:
 	if id in _registry:
-		push_warning("{0}: Duplicate registration for {1}".format([get_script().get_class(), id]))
+		push_warning("{0}: Duplicate registration for {1}".format([get_script().get_global_name(), id]))
 	else:
 		_registry[id] = variant
 	
@@ -22,5 +22,5 @@ func by_id(id: String) -> Variant:
 	if has(id):
 		return _registry[id]
 	else:
-		push_warning("{0}: {1} not found".format([get_script().get_class(), id]))
+		push_warning("{0}: {1} not found".format([get_script().get_global_name(), id]))
 		return null

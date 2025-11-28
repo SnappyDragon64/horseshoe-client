@@ -18,7 +18,7 @@ config/server_url=&"wss://74.225.136.76.sslip.io/ws"
 
 [autoload]
 
-Registries="*res://game/core/registries.gd"
+Registries="*res://game/registry/registries.gd"
 GameManager="*res://game/core/game_manager.gd"
 NetworkManager="*res://game/network/network_manager.gd"
 InputManager="*res://game/core/input_manager.gd"

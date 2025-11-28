@@ -2,12 +2,12 @@ class_name Handlers
 extends Registry
 
 
-var CONNECT:        Handler = register("connect",        HandleConnect.new())
-var LOAD_ROOM:      Handler = register("load_room",      HandleLoadRoom.new())
-var SPAWN_PLAYER:   Handler = register("spawn_player",   HandleSpawn.new())
-var DELETE_PLAYER:  Handler = register("delete_player",  HandleDelete.new())
-var PLAYER_MOVED:   Handler = register("player_moved",   HandleMove.new())
-var PLAYER_MESSAGE: Handler = register("player_message", HandleChat.new())
+var CONNECT:        Handler = _register("connect",        HandleConnect.new())
+var LOAD_ROOM:      Handler = _register("load_room",      HandleLoadRoom.new())
+var SPAWN_PLAYER:   Handler = _register("spawn_player",   HandleSpawn.new())
+var DELETE_PLAYER:  Handler = _register("delete_player",  HandleDelete.new())
+var PLAYER_MOVED:   Handler = _register("player_moved",   HandleMove.new())
+var PLAYER_MESSAGE: Handler = _register("player_message", HandleChat.new())
 
 
 func process_packet(data: Dictionary) -> void:
