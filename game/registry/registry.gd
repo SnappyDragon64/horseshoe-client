@@ -24,3 +24,11 @@ func by_id(id: String) -> Variant:
 	else:
 		push_warning("{0}: {1} not found".format([get_script().get_global_name(), id]))
 		return null
+
+
+func get_ids() -> Array[String]:
+	return _registry.keys()
+
+
+func get_values() -> Array[Variant]:
+	return _registry.values()
