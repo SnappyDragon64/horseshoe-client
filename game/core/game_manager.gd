@@ -9,6 +9,7 @@ var default_room: Room = Registries.ROOMS.SKI_VILLAGE
 func _ready() -> void:
 	NetworkManager.connected.connect(_on_connected)
 	NetworkManager.packet_received.connect(_on_packet_received)
+	NetworkManager.connection_failed.connect(_on_disconnected)
 	NetworkManager.disconnected.connect(_on_disconnected)
 	
 	AuthManager.login_success.connect(_on_login_success)
