@@ -8,7 +8,7 @@ signal register_failed(error_message: String)
 
 const SESSION_PATH = "user://session.cfg"
 
-var api_url: String = "http://localhost:8080" if false else ProjectSettings.get_setting("application/config/api_url")
+var api_url: String = "http://localhost:8080/api" if false else ProjectSettings.get_setting("application/config/api_url")
 
 var current_token: String = ""
 var current_username: String = ""
