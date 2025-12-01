@@ -6,8 +6,5 @@ func execute(data: Dictionary) -> void:
 	WorldManager.local_player_id = data.id
 	print("Connected as: ", WorldManager.local_player_id)
 	
-	NetworkManager.send_packet({
-		"type": "join_room",
-		"room": "debug_room",
-		"pos": {"x": 0, "y": 0}
-	})
+	var join_packet: Dictionary = PacketBuilder.create_join_packet(GameManager.default_room, Vector2.ZERO)
+	NetworkManager.send_packet(join_packet)

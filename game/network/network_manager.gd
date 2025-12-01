@@ -10,8 +10,10 @@ var websocket_url: String = "ws://localhost:8080/ws" if false else ProjectSettin
 var _connected := false
 
 
-func connect_to_server() -> void:
-	var err: Error = socket.connect_to_url(websocket_url)
+func connect_to_server(token: String) -> void:
+	var url := "%s?token=%s" % [websocket_url, token]
+	
+	var err: Error = socket.connect_to_url(url)
 	
 	if err == OK:
 		print("Connecting to %s..." % websocket_url)

@@ -14,15 +14,17 @@ config/name="Horseshoe Client"
 run/main_scene="uid://dfhrsr231y3it"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+config/api_url=&"https://74.225.136.76.sslip.io/api"
 config/server_url=&"wss://74.225.136.76.sslip.io/ws"
 
 [autoload]
 
 Registries="*res://game/registry/registries.gd"
-GameManager="*res://game/core/game_manager.gd"
 NetworkManager="*res://game/network/network_manager.gd"
-InputManager="*res://game/core/input_manager.gd"
+AuthManager="*res://game/network/auth_manager.gd"
 WorldManager="*res://game/world/world_manager.gd"
+InputManager="*res://game/core/input_manager.gd"
+GameManager="*res://game/core/game_manager.gd"
 
 [debug]
 

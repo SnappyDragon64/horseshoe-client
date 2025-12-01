@@ -1,7 +1,8 @@
 extends Node
 
 
-var scene_hud: PackedScene = preload("res://game/ui/hud.tscn")
+var scene_auth: PackedScene = preload("res://game/ui/auth_screen/auth_screen.tscn")
+var scene_hud: PackedScene = preload("res://game/ui/hud/hud.tscn")
 var default_room: Room = Registries.ROOMS.SKI_VILLAGE
 
 
@@ -9,10 +10,17 @@ func _ready() -> void:
 	NetworkManager.connected.connect(_on_connected)
 	NetworkManager.packet_received.connect(_on_packet_received)
 	NetworkManager.disconnected.connect(_on_disconnected)
+	
+	AuthManager.login_success.connect(_on_login_success)
+	
+	if AuthManager.load_session():
+		NetworkManager.connect_to_server(AuthManager.current_token)
+	else:
+		get_tree().change_scene_to_packed.call_deferred(scene_auth)
 
 
-func start_game() -> void:
-	NetworkManager.connect_to_server()
+func _on_login_success() -> void:
+	NetworkManager.connect_to_server(AuthManager.current_token)
 
 
 func _on_connected() -> void:
@@ -23,9 +31,6 @@ func _on_connected() -> void:
 	
 	var camera: Camera2D = Camera2D.new()
 	add_child(camera)
-	
-	var join_packet: Dictionary = PacketBuilder.create_join_packet(default_room, Vector2.ZERO)
-	NetworkManager.send_packet(join_packet)
 
 
 func _on_packet_received(data: Dictionary) -> void:
@@ -34,4 +39,5 @@ func _on_packet_received(data: Dictionary) -> void:
 
 func _on_disconnected() -> void:
 	print("Disconnected from server.")
-	get_tree().quit()
+	AuthManager.clear_session()
+	get_tree().change_scene_to_packed(scene_auth)
