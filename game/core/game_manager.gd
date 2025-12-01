@@ -5,6 +5,8 @@ var scene_auth: PackedScene = preload("res://game/ui/auth_screen/auth_screen.tsc
 var scene_hud: PackedScene = preload("res://game/ui/hud/hud.tscn")
 var default_room: Room = Registries.ROOMS.SKI_VILLAGE
 var auth: CanvasLayer
+var hud: CanvasLayer
+var camera: Camera2D
 
 
 func _ready() -> void:
@@ -33,11 +35,13 @@ func _on_connected() -> void:
 	
 	auth.hide()
 	
-	var hud: CanvasLayer = scene_hud.instantiate()
-	add_child(hud)
+	if not hud:
+		hud = scene_hud.instantiate()
+		add_child(hud)
 	
-	var camera: Camera2D = Camera2D.new()
-	add_child(camera)
+	if not camera:
+		camera = Camera2D.new()
+		add_child(camera)
 
 
 func _on_packet_received(data: Dictionary) -> void:
@@ -46,5 +50,6 @@ func _on_packet_received(data: Dictionary) -> void:
 
 func _on_disconnected() -> void:
 	print("Disconnected from server.")
+	ChatManager.clear_log()
 	AuthManager.clear_session()
 	auth.show()

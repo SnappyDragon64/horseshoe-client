@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://vmt6poocil88"]
+[gd_scene load_steps=5 format=3 uid="uid://vmt6poocil88"]
 
 [ext_resource type="Script" uid="uid://opv27hpajapq" path="res://game/ui/hud/hud.gd" id="1_ngxib"]
 
@@ -8,6 +8,11 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3lbap"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4vpa"]
+bg_color = Color(0.15686275, 0.15686275, 0.15686275, 0.5019608)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="HUD" type="CanvasLayer"]
 layer = 2
@@ -50,6 +55,52 @@ layout_mode = 2
 focus_mode = 0
 text = "Send"
 
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -270.0
+offset_right = 270.0
+offset_bottom = 300.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(540, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d4vpa")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/Panel/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "
+"
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "LOG"
+
 [connection signal="gui_input" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_gui_input"]
 [connection signal="text_changed" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/HBoxContainer/Button" to="." method="_on_submit_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_log_button_pressed"]

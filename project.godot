@@ -25,6 +25,7 @@ AuthManager="*res://game/network/auth_manager.gd"
 WorldManager="*res://game/world/world_manager.gd"
 InputManager="*res://game/core/input_manager.gd"
 GameManager="*res://game/core/game_manager.gd"
+ChatManager="*res://game/core/chat_manager.gd"
 
 [debug]
 

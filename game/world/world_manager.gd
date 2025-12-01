@@ -10,6 +10,10 @@ var players: Dictionary = {}
 var scene_player: PackedScene = preload("res://game/world/entities/player.tscn")
 
 
+func _ready() -> void:
+	ChatManager.bubble_requested.connect(_on_bubble_requested)
+
+
 func load_room(room_id: String, spawn_pos: Vector2, player_list: Array = []) -> void:
 	var room: Room = Registries.ROOMS.by_id(room_id)
 	if not room:
@@ -61,6 +65,6 @@ func move_player(id: String, target: Vector2) -> void:
 		players[id].move_to(target)
 
 
-func player_message(id: String, msg: String) -> void:
-	if players.has(id):
-		players[id].display_message(msg)
+func _on_bubble_requested(author: String, text: String) -> void:
+	if players.has(author):
+		players[author].display_message(text)
