@@ -5,12 +5,15 @@ signal connected
 signal disconnected
 signal packet_received(data: Dictionary)
 
-var socket: WebSocketPeer = WebSocketPeer.new()
+var socket: WebSocketPeer
 var websocket_url: String = "ws://localhost:8080/ws" if false else ProjectSettings.get_setting("application/config/server_url")
 var _connected := false
 
 
 func connect_to_server(token: String) -> void:
+	socket = WebSocketPeer.new()
+	set_process(true)
+	
 	var url := "%s?token=%s" % [websocket_url, token]
 	
 	var err: Error = socket.connect_to_url(url)
@@ -19,7 +22,6 @@ func connect_to_server(token: String) -> void:
 		print("Connecting to %s..." % websocket_url)
 	else:
 		push_error("Unable to connect.")
-		set_process(false)
 
 
 func send_packet(data: Dictionary) -> void:
