@@ -1,55 +1,65 @@
 extends Node
 
 
-var scene_auth: PackedScene = preload("res://game/ui/auth_screen/auth_screen.tscn")
-var scene_hud: PackedScene = preload("res://game/ui/hud/hud.tscn")
-var default_room: Room = Registries.ROOMS.SKI_VILLAGE
-var auth: CanvasLayer
-var hud: CanvasLayer
-var camera: Camera2D
+signal game_loaded
+
+var default_room: RoomData = Registries.ROOMS.SKI_VILLAGE
 
 
 func _ready() -> void:
-	auth = scene_auth.instantiate()
-	add_child(auth)
-	
 	NetworkManager.connected.connect(_on_connected)
-	NetworkManager.packet_received.connect(_on_packet_received)
-	NetworkManager.connection_failed.connect(_on_disconnected)
 	NetworkManager.disconnected.connect(_on_disconnected)
+	NetworkManager.connection_failed.connect(_on_connection_failed)
+	NetworkManager.packet_received.connect(_on_packet_received)
 	
-	AuthManager.login_success.connect(_on_login_success)
+	SessionManager.login_success.connect(_on_login_success)
+
+	Registries.UI_WINDOWS.SPINNER.cache()
+	Registries.UI_WINDOWS.LOADER.cache()
+
+	UIManager.set_root(Registries.UI_WINDOWS.MAIN_MENU)
+	var spinner: UIWindow = UIManager.push(Registries.UI_WINDOWS.SPINNER)
 	
-	if AuthManager.load_session():
-		NetworkManager.connect_to_server(AuthManager.current_token)
+	if SessionManager.load_session():
+		NetworkManager.connect_to_server(SessionManager.current_token)
 	else:
-		auth.show()
+		if spinner:
+			spinner.close()
 
 
 func _on_login_success() -> void:
-	NetworkManager.connect_to_server(AuthManager.current_token)
+	UIManager.push(Registries.UI_WINDOWS.SPINNER)
+	NetworkManager.connect_to_server(SessionManager.current_token)
 
 
 func _on_connected() -> void:
-	print("Connected to server.")
+	print("GameManager: Connected to server.")
 	
-	auth.hide()
+	var loader: UIWindow = UIManager.push(Registries.UI_WINDOWS.LOADER, { "close_on": game_loaded })
 	
-	if not hud:
-		hud = scene_hud.instantiate()
-		add_child(hud)
+	var join_packet: Dictionary = PacketBuilder.create_join_packet(GameManager.default_room, Vector2.ZERO)
+	NetworkManager.send_packet(join_packet)
 	
-	if not camera:
-		camera = Camera2D.new()
-		add_child(camera)
+	UIManager.set_root(Registries.UI_WINDOWS.HUD, {}, false, [loader])
 
 
 func _on_packet_received(data: Dictionary) -> void:
 	Registries.HANDLERS.process_packet(data)
 
 
+func _on_connection_failed() -> void:
+	print("GameManager: Connection failed.")
+	_return_to_auth()
+
+
 func _on_disconnected() -> void:
-	print("Disconnected from server.")
+	print("GameManager: Disconnected.")
+	_return_to_auth()
+
+
+func _return_to_auth() -> void:
 	ChatManager.clear_log()
-	AuthManager.clear_session()
-	auth.show()
+	WorldManager.unload_current_room()
+	SessionManager.clear_session()
+	
+	UIManager.set_root(Registries.UI_WINDOWS.MAIN_MENU)

@@ -14,11 +14,19 @@ bg_color = Color(0.15686275, 0.15686275, 0.15686275, 0.5019608)
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="HUD" type="CanvasLayer"]
-layer = 2
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_ngxib")
+metadata/_custom_type_script = "uid://c6injeip41b55"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -56,6 +64,7 @@ focus_mode = 0
 text = "Send"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -101,6 +110,5 @@ size_flags_horizontal = 4
 text = "LOG"
 
 [connection signal="gui_input" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_gui_input"]
-[connection signal="text_changed" from="PanelContainer/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/HBoxContainer/Button" to="." method="_on_submit_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_log_button_pressed"]

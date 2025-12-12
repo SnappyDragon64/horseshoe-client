@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends UIWindow
 
 
 @onready var line_edit: LineEdit = $PanelContainer/MarginContainer/HBoxContainer/LineEdit

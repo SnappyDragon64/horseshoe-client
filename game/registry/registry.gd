@@ -9,18 +9,18 @@ func _register(id: String, variant: Variant) -> Variant:
 	if id in _registry:
 		push_warning("{0}: Duplicate registration for {1}".format([get_script().get_global_name(), id]))
 	else:
-		_registry[id] = variant
+		_registry.set(id, variant)
 	
 	return variant
 
 
 func has(id: String) -> Variant:
-	return id in _registry
+	return _registry.has(id)
 
 
 func by_id(id: String) -> Variant:
 	if has(id):
-		return _registry[id]
+		return _registry.get(id)
 	else:
 		push_warning("{0}: {1} not found".format([get_script().get_global_name(), id]))
 		return null

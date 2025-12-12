@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://b322awwd0p2to"]
+
+[ext_resource type="Script" uid="uid://c6injeip41b55" path="res://game/ui/base/ui_window.gd" id="1_8qf5o"]
+[ext_resource type="Texture2D" uid="uid://xbu51q0d2rtl" path="res://icon.svg" id="2_cp76j"]
+
+[node name="Spinner" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8qf5o")
+close_on_escape = false
+metadata/_custom_type_script = "uid://c6injeip41b55"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_cp76j")

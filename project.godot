@@ -20,10 +20,10 @@ config/server_url=&"wss://74.225.136.76.sslip.io/ws"
 [autoload]
 
 Registries="*res://game/registry/registries.gd"
-NetworkManager="*res://game/network/network_manager.gd"
-AuthManager="*res://game/network/auth_manager.gd"
-WorldManager="*res://game/world/world_manager.gd"
-InputManager="*res://game/core/input_manager.gd"
+NetworkManager="*res://game/core/network_manager.gd"
+SessionManager="*res://game/core/session_manager.gd"
+UIManager="*res://game/core/ui_manager.gd"
+WorldManager="*res://game/core/world_manager.gd"
 GameManager="*res://game/core/game_manager.gd"
 ChatManager="*res://game/core/chat_manager.gd"
 
