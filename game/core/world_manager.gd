@@ -25,7 +25,7 @@ func load_room(room_data: RoomData, spawn_pos: Vector2, player_list: Array = [])
 	
 	var local_id: String = SessionManager.current_username
 	
-	current_room._local_player = spawn_player(local_id, spawn_pos, true)
+	spawn_player(local_id, spawn_pos, true)
 	
 	for player_data: Dictionary in player_list:
 		if player_data.id != local_id:
