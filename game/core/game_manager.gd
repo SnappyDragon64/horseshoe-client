@@ -37,7 +37,7 @@ func _on_connected() -> void:
 	
 	var loader: UIWindow = UIManager.push(Registries.UI_WINDOWS.LOADER, { "close_on": game_loaded })
 	
-	var join_packet: Dictionary = PacketBuilder.create_join_packet(GameManager.default_room, Vector2.ZERO)
+	var join_packet: Dictionary = PacketBuilder.create_join_packet(GameManager.default_room)
 	NetworkManager.send_packet(join_packet)
 	
 	UIManager.set_root(Registries.UI_WINDOWS.HUD, {}, false, [loader])
