@@ -66,16 +66,3 @@ func remove_player(id: String) -> void:
 	if players.has(id):
 		players.get(id).queue_free()
 		players.erase(id)
-
-
-func process_local_move(target_position: Vector2) -> void:
-	var local_id: String = SessionManager.current_username
-	var local_player: Player = players.get(local_id)
-	
-	if not local_player:
-		return 
-
-	local_player.move_to(target_position)
-
-	var packet: Dictionary = PacketBuilder.create_move_packet(target_position)
-	NetworkManager.send_packet(packet)
