@@ -50,11 +50,19 @@ func _on_packet_received(data: Dictionary) -> void:
 func _on_connection_failed() -> void:
 	print("GameManager: Connection failed.")
 	_return_to_auth()
+	UIManager.push(Registries.UI_WINDOWS.POPUP, {
+		"title": "Error",
+		"text": "Connection failed."
+	})
 
 
 func _on_disconnected() -> void:
 	print("GameManager: Disconnected.")
 	_return_to_auth()
+	UIManager.push(Registries.UI_WINDOWS.POPUP, {
+		"title": "Error",
+		"text": "Disconnected from the server."
+	})
 
 
 func _return_to_auth() -> void:

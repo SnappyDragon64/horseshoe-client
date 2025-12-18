@@ -5,6 +5,7 @@ extends Registry
 var LOAD_ROOM:      Handler = _register("load_room",      HandleLoadRoom.new())
 var SPAWN_PLAYER:   Handler = _register("spawn_player",   HandleSpawn.new())
 var DELETE_PLAYER:  Handler = _register("delete_player",  HandleDelete.new())
+var SYSTEM_MESSAGE: Handler = _register("system_message", HandleSystemMessage.new())
 var PLAYER_MOVED:   Handler = _register("player_moved",   HandleMove.new())
 var PLAYER_MESSAGE: Handler = _register("player_message", HandleChat.new())
 

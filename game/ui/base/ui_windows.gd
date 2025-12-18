@@ -6,6 +6,7 @@ var MAIN_MENU: UIWindowEntry = _register("main_menu", "res://game/ui/main_menu/a
 var HUD:       UIWindowEntry = _register("hud",       "res://game/ui/hud/hud.tscn")
 var LOADER:    UIWindowEntry = _register("loader",    "res://game/ui/loading/loading_screen.tscn")
 var SPINNER:   UIWindowEntry = _register("spinner",   "res://game/ui/loading/spinner.tscn")
+var POPUP:     UIWindowEntry = _register("popup",     "res://game/ui/common/popup.tscn")
 
 
 func _register(id: String, path: Variant) -> UIWindowEntry:
