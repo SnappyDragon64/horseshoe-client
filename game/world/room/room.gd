@@ -11,7 +11,7 @@ func _ready() -> void:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	return [""] if find_children("*", "NavigationRegion2D").size() > 0 else ["Room node requires a NavigationRegion2D child."]
+	return [] if find_children("*", "NavigationRegion2D").size() > 0 else ["Room node requires a NavigationRegion2D child."]
 
 
 func _setup_camera() -> void:
