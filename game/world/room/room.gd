@@ -7,6 +7,7 @@ extends Node2D
 
 
 func _ready() -> void:
+	set_y_sort_enabled(true)
 	_setup_camera()
 
 
