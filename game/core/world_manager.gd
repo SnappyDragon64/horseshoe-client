@@ -3,8 +3,8 @@ extends Node
 
 const SCENE_PLAYER: PackedScene = preload("res://game/world/entity/player.tscn")
 
-var current_room: Room = null
-var players: Dictionary = {}
+var _current_room: Room = null
+var _players: Dictionary[String, Player] = {}
 
 
 func _ready() -> void:
@@ -12,20 +12,22 @@ func _ready() -> void:
 
 
 func _on_bubble_requested(author: String, text: String) -> void:
-	if players.has(author):
-		players.get(author).display_message(text)
+	if _players.has(author):
+		_players.get(author).display_message(text)
 
 
 func load_room(room_data: RoomData, spawn_pos: Vector2, player_list: Array = []) -> void:
-	unload_current_room()
+	var local_id: String = SessionManager.current_username
+	var facing: Vector2 = _players[local_id].sprite.scale if _players.has(local_id) else Vector2.ONE
+	print(facing)
+	await unload_current_room()
 	
 	var room_scene: PackedScene = load(room_data.scene_path)
-	current_room = room_scene.instantiate() 
-	add_child(current_room)
-	
-	var local_id: String = SessionManager.current_username
+	_current_room = room_scene.instantiate() 
+	add_child(_current_room)
 	
 	spawn_player(local_id, spawn_pos, true)
+	_players[local_id].sprite.scale = facing
 	
 	for player_data: Dictionary in player_list:
 		if player_data.id != local_id:
@@ -33,15 +35,16 @@ func load_room(room_data: RoomData, spawn_pos: Vector2, player_list: Array = [])
 
 
 func unload_current_room() -> void:
-	if current_room:
-		current_room.queue_free()
+	if _current_room:
+		_current_room.queue_free()
+		await _current_room.tree_exited
 	
-	players.clear()
-	current_room = null
+	_players.clear()
+	_current_room = null
 
 
 func spawn_player(id: String, pos: Vector2, is_local: bool = false) -> Player:
-	if players.has(id):
+	if _players.has(id):
 		return null
 		
 	var player: Player = SCENE_PLAYER.instantiate()
@@ -50,19 +53,19 @@ func spawn_player(id: String, pos: Vector2, is_local: bool = false) -> Player:
 	
 	player.is_local = is_local
 	
-	current_room.add_child(player)
+	_current_room.add_child(player)
 		
-	players.set(id, player)
+	_players.set(id, player)
 	
 	return player
 
 
 func move_player(id: String, target: Vector2) -> void:
-	if players.has(id):
-		players.get(id).move_to(target)
+	if _players.has(id):
+		_players.get(id).move_to(target)
 
 
 func remove_player(id: String) -> void:
-	if players.has(id):
-		players.get(id).queue_free()
-		players.erase(id)
+	if _players.has(id):
+		_players.get(id).queue_free()
+		_players.erase(id)
