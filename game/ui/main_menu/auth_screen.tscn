@@ -52,13 +52,16 @@ layout_mode = 2
 placeholder_text = "Username"
 max_length = 15
 drag_and_drop_selection_enabled = false
+select_all_on_focus = true
 caret_blink = true
 
 [node name="LineEdit2" type="LineEdit" parent="Panel/HBoxContainer/LoginContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "Password"
 max_length = 128
+virtual_keyboard_type = 6
 drag_and_drop_selection_enabled = false
+select_all_on_focus = true
 caret_blink = true
 secret = true
 
@@ -85,13 +88,16 @@ layout_mode = 2
 placeholder_text = "Username"
 max_length = 15
 drag_and_drop_selection_enabled = false
+select_all_on_focus = true
 caret_blink = true
 
 [node name="LineEdit2" type="LineEdit" parent="Panel/HBoxContainer/RegisterContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "Password"
 max_length = 128
+virtual_keyboard_type = 6
 drag_and_drop_selection_enabled = false
+select_all_on_focus = true
 caret_blink = true
 secret = true
 

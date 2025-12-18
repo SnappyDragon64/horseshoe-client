@@ -56,6 +56,7 @@ size_flags_horizontal = 3
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3lbap")
 max_length = 120
 drag_and_drop_selection_enabled = false
+select_all_on_focus = true
 caret_blink = true
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
