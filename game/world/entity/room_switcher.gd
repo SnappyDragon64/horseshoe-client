@@ -13,6 +13,8 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is Player:
 		var player: Player = area
 		
-		if player.is_local:
+		if player.is_local:	
+			UIManager.push(Registries.UI_WINDOWS.LOADER, { "close_on": GameManager.game_loaded })
+			
 			var join_packet: Dictionary = PacketBuilder.create_join_packet(room)
 			NetworkManager.send_packet(join_packet)
