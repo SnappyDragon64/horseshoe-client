@@ -37,7 +37,7 @@ func _submit_message() -> void:
 	var text: String = line_edit.text
 	
 	if len(text) > 0:
-		ChatManager.player_message(WorldManager.local_player_id, text)
+		ChatManager.player_message(SessionManager.current_username, text)
 		var packet: Dictionary = PacketBuilder.create_chat_packet(text)
 		NetworkManager.send_packet(packet)
 		line_edit.clear()
