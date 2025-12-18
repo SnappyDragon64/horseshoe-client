@@ -10,7 +10,7 @@ func _ready() -> void:
 	ChatManager.log_updated.connect(_on_log_updated)
 
 
-func _on_log_updated(_formatted_line: String) -> void:
+func _on_log_updated() -> void:
 	var history := ChatManager.get_full_log()
 	chat_log.set_text(history)
 	_scroll_to_bottom.call_deferred()

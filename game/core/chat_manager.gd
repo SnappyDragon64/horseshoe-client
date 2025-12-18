@@ -1,7 +1,7 @@
 extends Node
 
 
-signal log_updated(formatted_line: String)
+signal log_updated()
 signal bubble_requested(author: String, text: String)
 
 const MAX_HISTORY: int = 100
@@ -17,7 +17,7 @@ func player_message(author: String, text: String) -> void:
 	if _history.size() > MAX_HISTORY:
 		_history.pop_front()
 		
-	log_updated.emit(formatted_line)
+	log_updated.emit()
 	bubble_requested.emit(author, text)
 
 
@@ -27,3 +27,4 @@ func get_full_log() -> String:
 
 func clear_log() -> void:
 	_history.clear()
+	log_updated.emit()
