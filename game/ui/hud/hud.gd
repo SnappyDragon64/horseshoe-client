@@ -21,7 +21,6 @@ func _scroll_to_bottom() -> void:
 	scrollbar.value = scrollbar.max_value
 
 
-
 func _on_line_edit_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
 		_submit_message()
@@ -45,4 +44,4 @@ func _submit_message() -> void:
 
 func _on_log_button_pressed() -> void:
 	log_panel.set_visible(not log_panel.visible)
-	
+	_scroll_to_bottom.call_deferred()
