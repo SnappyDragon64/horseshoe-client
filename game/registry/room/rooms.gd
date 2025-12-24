@@ -1,10 +1,6 @@
 class_name Rooms
-extends ResourceRegistry
+extends Registry
 
 
-var SKI_VILLAGE: RoomDef = _register("ski_village")
-var SKI_HILL:    RoomDef = _register("ski_hill")
-
-
-func _get_registry_id() -> String:
-	return "room"
+var SKI_VILLAGE: RoomDef = _register("ski_village", preload("res://definition/room/ski_village.tres"))
+var SKI_HILL: RoomDef = _register("ski_hill", preload("res://definition/room/ski_hill.tres"))

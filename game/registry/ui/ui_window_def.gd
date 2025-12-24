@@ -1,5 +1,6 @@
+@tool
 class_name UIWindowDef
-extends ProxyDef
+extends Definition
 
 
 func get_scene() -> PackedScene:

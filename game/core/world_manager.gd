@@ -16,13 +16,13 @@ func _on_bubble_requested(author: String, text: String) -> void:
 		_players.get(author).display_message(text)
 
 
-func load_room(room_data: RoomDef, spawn_pos: Vector2, player_list: Array = []) -> void:
+func load_room(room: RoomDef, spawn_pos: Vector2, player_list: Array = []) -> void:
 	var local_id: String = SessionManager.current_username
 	var facing: Vector2 = _players[local_id].sprite.scale if _players.has(local_id) else Vector2.ONE
 	
 	await unload_current_room()
 	
-	var room_scene: PackedScene = load(room_data.scene_path)
+	var room_scene: PackedScene = room.get_resource()
 	_current_room = room_scene.instantiate() 
 	add_child(_current_room)
 	

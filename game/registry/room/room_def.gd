@@ -1,5 +1,10 @@
+@tool
 class_name RoomDef
-extends ResourceDef
+extends Definition
+
 
 @export var name: String
-@export_file("*.tscn") var scene_path: String
+
+
+func _get_path_hint() -> String:
+	return "*.tscn"
