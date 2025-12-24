@@ -2,7 +2,7 @@ class_name RoomSwitcher
 extends Area2D
 
 
-@export var room: RoomData
+@export var room: RoomDef
 
 
 func _ready() -> void:

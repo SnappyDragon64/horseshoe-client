@@ -3,7 +3,7 @@ class_name Room
 extends Node2D
 
 
-@export var data: RoomData
+@export var data: RoomDef
 
 
 func _ready() -> void:

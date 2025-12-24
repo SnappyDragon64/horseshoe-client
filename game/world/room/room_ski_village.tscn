@@ -14,6 +14,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-621, 263, -497, 239, -
 radius = 56.142673
 
 [node name="RoomSkiVillage" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_1mhsk")
 metadata/_custom_type_script = "uid://b87wj7tgo6i15"
 

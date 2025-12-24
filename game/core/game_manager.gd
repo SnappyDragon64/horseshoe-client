@@ -3,7 +3,7 @@ extends Node
 
 signal game_loaded
 
-var default_room: RoomData = Registries.ROOMS.SKI_VILLAGE
+var default_room: RoomDef = Registries.ROOMS.SKI_VILLAGE
 
 
 func _ready() -> void:

@@ -2,7 +2,7 @@ class_name PacketBuilder
 extends RefCounted
 
 
-static func create_join_packet(room: RoomData) -> Dictionary:
+static func create_join_packet(room: RoomDef) -> Dictionary:
 	return {
 		"type": "join_room",
 		"room": room.id

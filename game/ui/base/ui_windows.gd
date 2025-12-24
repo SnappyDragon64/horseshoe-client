@@ -2,24 +2,24 @@ class_name UIWindows
 extends Registry
 
 
-var MAIN_MENU: UIWindowEntry = _register("main_menu", "res://game/ui/main_menu/auth_screen.tscn")
-var HUD:       UIWindowEntry = _register("hud",       "res://game/ui/hud/hud.tscn")
-var LOADER:    UIWindowEntry = _register("loader",    "res://game/ui/loading/loading_screen.tscn")
-var SPINNER:   UIWindowEntry = _register("spinner",   "res://game/ui/loading/spinner.tscn")
-var POPUP:     UIWindowEntry = _register("popup",     "res://game/ui/common/popup.tscn")
+var MAIN_MENU: UIWindowDef = _register("main_menu", "res://game/ui/main_menu/auth_screen.tscn")
+var HUD:       UIWindowDef = _register("hud",       "res://game/ui/hud/hud.tscn")
+var LOADER:    UIWindowDef = _register("loader",    "res://game/ui/loading/loading_screen.tscn")
+var SPINNER:   UIWindowDef = _register("spinner",   "res://game/ui/loading/spinner.tscn")
+var POPUP:     UIWindowDef = _register("popup",     "res://game/ui/common/popup.tscn")
 
 
-func _register(id: String, path: Variant) -> UIWindowEntry:
-	var entry: UIWindowEntry = UIWindowEntry.new(path)
+func _register(id: String, path: Variant) -> UIWindowDef:
+	var entry: UIWindowDef = UIWindowDef.new(path)
 	return super._register(id, entry)
 
 
 func flush_cache() -> void:
-	for entry: UIWindowEntry in get_values():
+	for entry: UIWindowDef in get_values():
 		entry.free_cache()
 
 
-class UIWindowEntry extends RefCounted:
+class UIWindowDef extends RefCounted:
 	var _path: String
 	var _cached_scene: PackedScene = null
 	
@@ -40,7 +40,7 @@ class UIWindowEntry extends RefCounted:
 		var instance: Node = scene.instantiate()
 		
 		if not instance is UIWindow:
-			assert(false, "UIWindowEntry.instantiate() failed: %s is not a UIWindow" % [_path])
+			assert(false, "UIWindowDef.instantiate() failed: %s is not a UIWindow" % [_path])
 			return null
 		
 		instance = instance as UIWindow

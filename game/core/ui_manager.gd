@@ -22,7 +22,7 @@ func _setup_dimmer() -> void:
 	add_child(dimmer)
 
 
-func push(entry: UIWindows.UIWindowEntry, props: Dictionary[String, Variant] = {}, cache_scene: bool = false) -> UIWindow:
+func push(entry: UIWindows.UIWindowDef, props: Dictionary[String, Variant] = {}, cache_scene: bool = false) -> UIWindow:
 	if not entry:
 		return null
 	
@@ -48,7 +48,7 @@ func push(entry: UIWindows.UIWindowEntry, props: Dictionary[String, Variant] = {
 	return window
 
 
-func set_root(entry: UIWindows.UIWindowEntry, props: Dictionary[String, Variant] = {}, cache_scene: bool = false, flush_except: Array[UIWindow] = []) -> UIWindow:
+func set_root(entry: UIWindows.UIWindowDef, props: Dictionary[String, Variant] = {}, cache_scene: bool = false, flush_except: Array[UIWindow] = []) -> UIWindow:
 	flush(flush_except)
 	
 	if not entry:

@@ -16,7 +16,7 @@ func _on_bubble_requested(author: String, text: String) -> void:
 		_players.get(author).display_message(text)
 
 
-func load_room(room_data: RoomData, spawn_pos: Vector2, player_list: Array = []) -> void:
+func load_room(room_data: RoomDef, spawn_pos: Vector2, player_list: Array = []) -> void:
 	var local_id: String = SessionManager.current_username
 	var facing: Vector2 = _players[local_id].sprite.scale if _players.has(local_id) else Vector2.ONE
 	
