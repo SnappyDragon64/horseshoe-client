@@ -22,7 +22,7 @@ func load_room(room: RoomDef, spawn_pos: Vector2, player_list: Array = []) -> vo
 	
 	await unload_current_room()
 	
-	var room_scene: PackedScene = room.get_resource()
+	var room_scene: PackedScene = room.get_scene()
 	_current_room = room_scene.instantiate() 
 	add_child(_current_room)
 	
