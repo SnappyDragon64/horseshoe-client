@@ -18,21 +18,21 @@ func _on_register_button_pressed() -> void:
 
 
 func _on_login_failed(error_msg: String) -> void:
-	UIManager.push(Registries.UI_WINDOWS.POPUP, {
+	UIManager.push(Registries.UI.POPUP, {
 		"title": "Login Failed",
 		"text": error_msg
 	})
 
 
 func _on_register_failed(error_msg: String) -> void:
-	UIManager.push(Registries.UI_WINDOWS.POPUP, {
+	UIManager.push(Registries.UI.POPUP, {
 		"title": "Registration Failed",
 		"text": error_msg
 	})
 
 
 func _on_register_success() -> void:
-	UIManager.push(Registries.UI_WINDOWS.POPUP, {
+	UIManager.push(Registries.UI.POPUP, {
 		"title": "Success",
 		"text": "Account created! You can now log in."
 	})

@@ -14,11 +14,11 @@ func _ready() -> void:
 	
 	SessionManager.login_success.connect(_on_login_success)
 
-	Registries.UI_WINDOWS.SPINNER.cache()
-	Registries.UI_WINDOWS.LOADER.cache()
+	Registries.UI.SPINNER.cache()
+	Registries.UI.LOADER.cache()
 
-	UIManager.set_root(Registries.UI_WINDOWS.MAIN_MENU)
-	var spinner: UIWindow = UIManager.push(Registries.UI_WINDOWS.SPINNER)
+	UIManager.set_root(Registries.UI.MAIN_MENU)
+	var spinner: UIWindow = UIManager.push(Registries.UI.SPINNER)
 	
 	if SessionManager.load_session():
 		NetworkManager.connect_to_server(SessionManager.current_token)
@@ -28,19 +28,19 @@ func _ready() -> void:
 
 
 func _on_login_success() -> void:
-	UIManager.push(Registries.UI_WINDOWS.SPINNER)
+	UIManager.push(Registries.UI.SPINNER)
 	NetworkManager.connect_to_server(SessionManager.current_token)
 
 
 func _on_connected() -> void:
 	print("GameManager: Connected to server.")
 	
-	var loader: UIWindow = UIManager.push(Registries.UI_WINDOWS.LOADER, { "close_on": game_loaded })
+	var loader: UIWindow = UIManager.push(Registries.UI.LOADER, { "close_on": game_loaded })
 	
 	var join_packet: Dictionary = PacketBuilder.create_join_packet(GameManager.default_room)
 	NetworkManager.send_packet(join_packet)
 	
-	UIManager.set_root(Registries.UI_WINDOWS.HUD, [loader])
+	UIManager.set_root(Registries.UI.HUD, [loader])
 
 
 func _on_packet_received(data: Dictionary) -> void:
@@ -50,7 +50,7 @@ func _on_packet_received(data: Dictionary) -> void:
 func _on_connection_failed() -> void:
 	print("GameManager: Connection failed.")
 	_return_to_auth()
-	UIManager.push(Registries.UI_WINDOWS.POPUP, {
+	UIManager.push(Registries.UI.POPUP, {
 		"title": "Error",
 		"text": "Connection failed."
 	})
@@ -59,7 +59,7 @@ func _on_connection_failed() -> void:
 func _on_disconnected() -> void:
 	print("GameManager: Disconnected.")
 	_return_to_auth()
-	UIManager.push(Registries.UI_WINDOWS.POPUP, {
+	UIManager.push(Registries.UI.POPUP, {
 		"title": "Error",
 		"text": "Disconnected from the server."
 	})
@@ -70,4 +70,4 @@ func _return_to_auth() -> void:
 	WorldManager.unload_current_room()
 	SessionManager.clear_session()
 	
-	UIManager.set_root(Registries.UI_WINDOWS.MAIN_MENU)
+	UIManager.set_root(Registries.UI.MAIN_MENU)
