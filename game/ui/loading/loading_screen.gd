@@ -1,4 +1,4 @@
-extends UIWindow
+extends UIView
 
 
 var close_on: Signal

@@ -1,4 +1,4 @@
-extends UIWindow
+extends UIView
 
 
 @onready var line_edit: LineEdit = $PanelContainer/MarginContainer/HBoxContainer/LineEdit

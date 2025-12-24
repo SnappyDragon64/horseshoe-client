@@ -1,4 +1,4 @@
-class_name UIWindow
+class_name UIView
 extends Control
 
 

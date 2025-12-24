@@ -1,5 +1,5 @@
 @tool
-class_name UIWindowDef
+class_name UIViewDef
 extends Definition
 
 

@@ -1,4 +1,4 @@
-extends UIWindow
+extends UIView
 
 
 @onready var title_label: Label = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/TitleLabel
