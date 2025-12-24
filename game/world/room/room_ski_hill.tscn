@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b87wj7tgo6i15" path="res://game/world/room/room.gd" id="1_0xw5u"]
 [ext_resource type="Texture2D" uid="uid://drfkmfw80gsiy" path="res://asset/room/ski_hill.png" id="1_04li6"]
 [ext_resource type="Script" uid="uid://kpodsrx7bqxk" path="res://game/world/entity/room_switcher.gd" id="2_nr75m"]
-[ext_resource type="Resource" uid="uid://bh0madl6skv1w" path="res://data/room/ski_village.tres" id="3_v4xn1"]
+[ext_resource type="Resource" uid="uid://bh0madl6skv1w" path="res://definition/room/ski_village.tres" id="3_v4xn1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_i8jub"]
 vertices = PackedVector2Array(386.64844, -31.226563, 417.29688, -13.9296875, 372.5625, 28.523438, 339.3125, 16.71875, -359.4375, 37.671875, -420.8203, -16.882813, -388.46875, -44.820313, -277.53906, -39.640625, -185.57813, 70.28125, 334.28906, -102.92969, 368.8203, -87.671875, 274.04688, -72.32031, 330.6875, 32.5, 257.85156, 69.85156, 173.5625, 64.89844, 163.61719, -103.40625, 42.492188, -165.9375, 127.28906, -160.35156, 100.609375, 90.86719, 14.890625, 84.96875, -65.28906, -147.8125, -130.10156, -162.53906, -103.921875, 95.85156, -257.70313, -109.609375)
@@ -14,6 +14,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-392, -55, -436, -17, -
 radius = 35.0
 
 [node name="RoomSkiHill" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_0xw5u")
 metadata/_custom_type_script = "uid://b87wj7tgo6i15"
 

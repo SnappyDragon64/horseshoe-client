@@ -8,8 +8,6 @@ signal closed
 @export var is_modal: bool = true
 @export var close_on_escape: bool = true
 
-var entry: UIWindows.UIWindowDef
-
 var _closing: bool = false
 
 

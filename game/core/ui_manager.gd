@@ -22,11 +22,60 @@ func _setup_dimmer() -> void:
 	add_child(dimmer)
 
 
-func push(entry: UIWindows.UIWindowDef, props: Dictionary[String, Variant] = {}, cache_scene: bool = false) -> UIWindow:
+func _unhandled_input(event: InputEvent) -> void:
+	if _window_stack.is_empty():
+		return
+
+	var top: UIWindow = _window_stack.back()
+	
+	if event.is_action_pressed("ui_cancel") and top.close_on_escape and _window_stack.size() > 1:
+		top.close()
+		get_viewport().set_input_as_handled()
+
+
+func _pop_window(window: UIWindow) -> void:
+	if not _window_stack.has(window):
+		return
+	
+	_window_stack.erase(window)
+	window.queue_free()
+	_update_dimmer_state()
+	
+	if not _window_stack.is_empty():
+		var top: UIWindow = _window_stack.back()
+		top.grab_default_focus.call_deferred()
+
+
+func _update_dimmer_state() -> void:
+	dimmer.visible = false
+	
+	if _window_stack.is_empty():
+		return
+
+	var index := -1
+	
+	for i in range(_window_stack.size() - 1, -1, -1):
+		var window := _window_stack[i]
+		
+		if window.visible and window.is_modal:
+			index = window.get_index() - 1
+			break
+
+	if index != -1:
+		dimmer.visible = true
+		move_child(dimmer, index)
+
+
+func _get_ui_window(def: UIWindowDef) -> UIWindow:
+	var scene: PackedScene = def.get_scene()
+	return scene.instantiate()
+
+
+func push(entry: UIWindowDef, props: Dictionary[String, Variant] = {}) -> UIWindow:
 	if not entry:
 		return null
 	
-	var window: UIWindow = entry.instantiate(cache_scene)
+	var window: UIWindow = _get_ui_window(entry)
 	
 	if not window:
 		return null
@@ -48,13 +97,13 @@ func push(entry: UIWindows.UIWindowDef, props: Dictionary[String, Variant] = {},
 	return window
 
 
-func set_root(entry: UIWindows.UIWindowDef, props: Dictionary[String, Variant] = {}, cache_scene: bool = false, flush_except: Array[UIWindow] = []) -> UIWindow:
+func set_root(entry: UIWindowDef, flush_except: Array[UIWindow] = [], props: Dictionary[String, Variant] = {}) -> UIWindow:
 	flush(flush_except)
 	
 	if not entry:
 		return null
 	
-	var window: UIWindow = entry.instantiate(cache_scene)
+	var window: UIWindow = _get_ui_window(entry)
 	
 	if not window:
 		return null
@@ -93,47 +142,3 @@ func clear_focus() -> void:
 	
 	if viewport.gui_get_focus_owner():
 		viewport.gui_release_focus()
-
-
-func _pop_window(window: UIWindow) -> void:
-	if not _window_stack.has(window):
-		return
-	
-	_window_stack.erase(window)
-	window.queue_free()
-	_update_dimmer_state()
-	
-	if not _window_stack.is_empty():
-		var top: UIWindow = _window_stack.back()
-		top.grab_default_focus.call_deferred()
-
-
-func _update_dimmer_state() -> void:
-	dimmer.visible = false
-	
-	if _window_stack.is_empty():
-		return
-
-	var index := -1
-	
-	for i in range(_window_stack.size() - 1, -1, -1):
-		var window := _window_stack[i]
-		
-		if window.visible and window.is_modal:
-			index = window.get_index() - 1
-			break
-
-	if index != -1:
-		dimmer.visible = true
-		move_child(dimmer, index)
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if _window_stack.is_empty():
-		return
-
-	var top: UIWindow = _window_stack.back()
-	
-	if event.is_action_pressed("ui_cancel") and top.close_on_escape and _window_stack.size() > 1:
-		top.close()
-		get_viewport().set_input_as_handled()

@@ -1,4 +1,5 @@
-@abstract class_name Registry
+@abstract
+class_name Registry
 extends RefCounted
 
 

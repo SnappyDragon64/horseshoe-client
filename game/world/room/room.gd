@@ -3,9 +3,6 @@ class_name Room
 extends Node2D
 
 
-@export var data: RoomDef
-
-
 func _ready() -> void:
 	set_y_sort_enabled(true)
 	_setup_camera()

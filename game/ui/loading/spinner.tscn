@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b322awwd0p2to"]
 
-[ext_resource type="Script" uid="uid://c6injeip41b55" path="res://game/ui/base/ui_window.gd" id="1_8qf5o"]
+[ext_resource type="Script" uid="uid://c6injeip41b55" path="res://game/ui/ui_window.gd" id="1_8qf5o"]
 [ext_resource type="Texture2D" uid="uid://xbu51q0d2rtl" path="res://icon.svg" id="2_cp76j"]
 
 [node name="Spinner" type="Control"]

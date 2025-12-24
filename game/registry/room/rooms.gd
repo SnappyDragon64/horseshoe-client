@@ -1,5 +1,5 @@
 class_name Rooms
-extends DataRegistry
+extends ResourceRegistry
 
 
 var SKI_VILLAGE: RoomDef = _register("ski_village")
