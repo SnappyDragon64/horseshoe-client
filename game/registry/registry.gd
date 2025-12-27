@@ -21,11 +21,11 @@ func _register(id: StringName, item: Variant) -> Variant:
 	return item
 
 
-func has(id: String) -> bool:
+func has(id: StringName) -> bool:
 	return _registry.has(id)
 
 
-func get_by_id(id: String) -> Variant:
+func get_by_id(id: StringName) -> Variant:
 	if has(id):
 		return _registry[id]
 	else:
