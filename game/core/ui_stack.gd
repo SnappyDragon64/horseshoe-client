@@ -5,6 +5,9 @@ var dimmer: ColorRect
 
 var _view_stack: Array[UIView] = []
 
+var _pushing := false
+
+
 
 func _ready() -> void:
 	layer = 100
@@ -28,7 +31,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	var top: UIView = _view_stack.back()
 	
-	if event.is_action_pressed("ui_cancel") and top.close_on_escape and _view_stack.size() > 1:
+	if event.is_action_pressed("ui_cancel") and top._close_on_escape and _view_stack.size() > 1:
 		top.close()
 		get_viewport().set_input_as_handled()
 
@@ -43,6 +46,11 @@ func _pop_view(view: UIView) -> void:
 	
 	if not _view_stack.is_empty():
 		var top: UIView = _view_stack.back()
+		
+		if top._suspended:
+			top._resume()
+			await top.resumed
+		
 		top.grab_default_focus.call_deferred()
 
 
@@ -57,7 +65,7 @@ func _update_dimmer_state() -> void:
 	for i in range(_view_stack.size() - 1, -1, -1):
 		var view := _view_stack[i]
 		
-		if view.visible and view.is_modal:
+		if view.visible and view._is_modal:
 			index = view.get_index() - 1
 			break
 
@@ -66,64 +74,89 @@ func _update_dimmer_state() -> void:
 		move_child(dimmer, index)
 
 
-func _get_ui_view(def: UIViewDef) -> UIView:
+func _instantiate_view(def: UIViewDef) -> UIView:
 	var scene: PackedScene = def.get_scene()
-	return scene.instantiate()
+	var view: UIView = scene.instantiate()
+	
+	view._id = def.id
+	view._is_modal = def.is_modal
+	view._close_on_escape = def.close_on_escape
+	view._hide_previous = def.hide_previous
+	
+	return view
 
 
-func push(entry: UIViewDef, props: Dictionary[String, Variant] = {}) -> UIView:
-	if not entry:
+func push(def: UIViewDef, props: Dictionary[String, Variant] = {}) -> UIView:
+	if _pushing:
 		return null
 	
-	var view: UIView = _get_ui_view(entry)
-	
-	if not view:
+	if not def:
 		return null
-
+	
+	_pushing = true
+	
+	var previous_view: UIView = _view_stack.back() if not _view_stack.is_empty() else null
+	
+	var view: UIView = _instantiate_view(def)
+	view.closed.connect(func() -> void: _pop_view(view))
 	view._setup(props)
 	
 	add_child(view)
 	_view_stack.append(view)
 	
 	clear_focus()
-	
-	view.closed.connect(func() -> void: _pop_view(view))
-	view._open()
-	
 	_update_dimmer_state()
 	
-	view.grab_default_focus.call_deferred()
+	_handle_push(def, view, previous_view)
 	
 	return view
 
 
-func set_root(entry: UIViewDef, flush_except: Array[UIView] = [], props: Dictionary[String, Variant] = {}) -> UIView:
+func _handle_push(def: UIViewDef, view: UIView, previous_view: UIView) -> void:
+	if def.hide_previous and is_instance_valid(previous_view) and not previous_view._closed:
+		previous_view._suspend()
+		await previous_view.suspended
+	
+	view._open()
+	await view.opened
+	
+	_pushing = false
+	
+	view.grab_default_focus.call_deferred()
+
+
+func set_root(def: UIViewDef, flush_except: Array[UIView] = [], props: Dictionary[String, Variant] = {}) -> UIView:
+	if not def:
+		return null
+	
+	_pushing = true
+	
 	flush(flush_except)
 	
-	if not entry:
-		return null
-	
-	var view: UIView = _get_ui_view(entry)
-	
-	if not view:
-		return null
-
+	var view: UIView = _instantiate_view(def)
+	view.closed.connect(func() -> void: _pop_view(view))
 	view._setup(props)
 	
 	add_child(view)
 	move_child(view, 0)
 	_view_stack.push_front(view)
 	
-	view.closed.connect(_pop_view, CONNECT_APPEND_SOURCE_OBJECT)
-	view._open()
-	
+	clear_focus()
 	_update_dimmer_state()
 	
-	if _view_stack.back() == view:
-		clear_focus()
-		view.grab_default_focus.call_deferred()
-
+	_handle_set_root(view)
+	
 	return view
+
+
+func _handle_set_root(view: UIView) -> void:
+	view._open()
+	await view.opened
+
+	_pushing = false
+	
+	if _view_stack.back() == view:
+		view.grab_default_focus.call_deferred()
 
 
 func flush(except: Array[UIView] = []) -> void:

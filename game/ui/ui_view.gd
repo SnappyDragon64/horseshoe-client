@@ -4,11 +4,24 @@ extends Control
 
 signal opened
 signal closed
+signal suspended
+signal resumed
 
-@export var is_modal: bool = true
-@export var close_on_escape: bool = true
+var _suspended := false
+var _closed := false
 
-var _closing: bool = false
+@warning_ignore("unused_private_class_variable")
+var _id := &""
+@warning_ignore("unused_private_class_variable")
+var _is_modal := false
+@warning_ignore("unused_private_class_variable")
+var _close_on_escape := false
+@warning_ignore("unused_private_class_variable")
+var _hide_previous := false
+
+
+func _ready() -> void:
+	visible = false
 
 
 func _setup(_props: Dictionary[String, Variant]) -> void:
@@ -20,12 +33,48 @@ func _setup(_props: Dictionary[String, Variant]) -> void:
 
 
 func _open() -> void:
+	visible = true
+	@warning_ignore("redundant_await")
+	await _animate_show()
 	opened.emit()
 
 
 func _close() -> void:
-	hide()
+	@warning_ignore("redundant_await")
+	await _animate_hide()
 	closed.emit()
+
+
+func _suspend() -> void:
+	if _suspended:
+		suspended.emit()
+		return
+	
+	_suspended = true
+	set_process_mode(PROCESS_MODE_DISABLED)
+	@warning_ignore("redundant_await")
+	await _animate_hide()
+	suspended.emit()
+
+
+func _resume() -> void:
+	if not _suspended:
+		resumed.emit()
+		return
+	
+	_suspended = false
+	set_process_mode(PROCESS_MODE_INHERIT)
+	@warning_ignore("redundant_await")
+	await _animate_show()
+	resumed.emit()
+
+
+func _animate_show() -> void:
+	show()
+
+
+func _animate_hide() -> void:
+	hide()
 
 
 func grab_default_focus() -> void:
@@ -33,6 +82,9 @@ func grab_default_focus() -> void:
 
 
 func close() -> void:
-	if not _closing:
-		_closing = true
-		_close()
+	if _closed:
+		return
+	
+	_closed = true
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_close()
