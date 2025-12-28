@@ -10,14 +10,8 @@ signal resumed
 var _suspended := false
 var _closed := false
 
-@warning_ignore("unused_private_class_variable")
-var _id := &""
-@warning_ignore("unused_private_class_variable")
-var _is_modal := false
-@warning_ignore("unused_private_class_variable")
-var _close_on_escape := false
-@warning_ignore("unused_private_class_variable")
-var _hide_previous := false
+@export var close_on_escape := false
+@export var hide_previous := false
 
 
 func _ready() -> void:
@@ -51,9 +45,9 @@ func _suspend() -> void:
 		return
 	
 	_suspended = true
-	set_process_mode(PROCESS_MODE_DISABLED)
 	@warning_ignore("redundant_await")
 	await _animate_hide()
+	visible = false
 	suspended.emit()
 
 
@@ -63,7 +57,7 @@ func _resume() -> void:
 		return
 	
 	_suspended = false
-	set_process_mode(PROCESS_MODE_INHERIT)
+	visible = true
 	@warning_ignore("redundant_await")
 	await _animate_show()
 	resumed.emit()

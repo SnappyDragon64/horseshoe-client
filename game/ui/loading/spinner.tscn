@@ -11,8 +11,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8qf5o")
-close_on_escape = false
 metadata/_custom_type_script = "uid://c6injeip41b55"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3137255)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
