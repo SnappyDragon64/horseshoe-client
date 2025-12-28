@@ -2,6 +2,10 @@
 class_name UIViewDef
 extends Definition
 
+## A lazy-loaded proxy for [UIView] scenes.
+##
+## Stores the file path to a UI scene.
+## Used by [UIStack] to instantiate views on demand.
 
 func _get_path_hint() -> String:
 	return "*.tscn"

@@ -1,8 +1,13 @@
 extends CanvasLayer
 
+## Global manager for UI stacking, navigation, and focus.
+##
+## [UIStack] handles the lifecycle of [UIView] instances.
 
+## Internal representation of the active UI stack.
 var _view_stack: Array[UIView] = []
 
+## Guards against concurrent push operations.
 var _pushing := false
 
 
@@ -46,6 +51,9 @@ func _instantiate_view(def: UIViewDef) -> UIView:
 	return view
 
 
+## Instantiates a view from [param def] and adds it to the top of the stack.
+## Injects [param props] into the instance before it enters the tree.
+## Returns the instance immediately; animations are handled asynchronously.
 func push(def: UIViewDef, props: Dictionary[String, Variant] = {}) -> UIView:
 	if _pushing:
 		return null
@@ -73,6 +81,7 @@ func push(def: UIViewDef, props: Dictionary[String, Variant] = {}) -> UIView:
 	return view
 
 
+## Manages the transition sequence for a newly pushed view.
 func _handle_push(view: UIView, previous_view: UIView) -> void:
 	if view.hide_previous and is_instance_valid(previous_view) and not previous_view._closed:
 		previous_view._suspend()
@@ -84,6 +93,8 @@ func _handle_push(view: UIView, previous_view: UIView) -> void:
 	view.grab_default_focus.call_deferred()
 
 
+## Replaces the entire stack with a new base view. 
+## Existing views are removed via [method flush], excluding those in [param flush_except].
 func set_root(def: UIViewDef, flush_except: Array[UIView] = [], props: Dictionary[String, Variant] = {}) -> UIView:
 	if not def:
 		return null
@@ -109,6 +120,7 @@ func set_root(def: UIViewDef, flush_except: Array[UIView] = [], props: Dictionar
 	return view
 
 
+## Manages the transition sequence for a newly set root view.
 func _handle_set_root(view: UIView) -> void:
 	view._open()
 	await view.opened
@@ -117,6 +129,7 @@ func _handle_set_root(view: UIView) -> void:
 		view.grab_default_focus.call_deferred()
 
 
+## Immediately destroys all views in the stack except for those in the [param except] list.
 func flush(except: Array[UIView] = []) -> void:
 	for i in range(_view_stack.size() - 1, -1, -1):
 		var view: UIView = _view_stack[i]
@@ -125,6 +138,8 @@ func flush(except: Array[UIView] = []) -> void:
 			_view_stack.remove_at(i)
 			view.queue_free()
 
+
+## Releases the current GUI focus owner from the [Viewport].
 func clear_focus() -> void:
 	var viewport := get_viewport()
 	

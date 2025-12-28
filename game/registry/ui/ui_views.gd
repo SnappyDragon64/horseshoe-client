@@ -1,6 +1,9 @@
 class_name UIViews
 extends Registry
 
+## Registry for [UIViewDef] configurations.
+##
+## Acts as the central registry for all UI scenes available to the [UIStack].
 
 var MAIN_MENU: UIViewDef = _register("main_menu", UIViewDef.new("res://game/ui/main_menu/auth_screen.tscn"))
 var HUD: UIViewDef = _register("hud", UIViewDef.new("res://game/ui/hud/hud.tscn"))
