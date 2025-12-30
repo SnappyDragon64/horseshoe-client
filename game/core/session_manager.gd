@@ -89,10 +89,9 @@ func _on_login_completed(_result: int, response_code: int, _headers: PackedStrin
 		login_failed.emit("Server Error: %d" % response_code)
 
 
-func _on_register_completed(_result: int, response_code: int, _headers: PackedStringArray, _body: PackedByteArray) -> void:
+func _on_register_completed(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	if response_code == 200:
 		register_success.emit()
-	elif response_code == 409:
-		register_failed.emit("Username already taken.")
 	else:
-		register_failed.emit("Registration failed: %d" % response_code)
+		var error_message := body.get_string_from_utf8().strip_edges()
+		register_failed.emit("Registration failed: %s" % error_message)
